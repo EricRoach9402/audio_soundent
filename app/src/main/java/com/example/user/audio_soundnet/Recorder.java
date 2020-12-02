@@ -243,7 +243,6 @@ public class Recorder {
                     for (int i = 0; i < buffer.length; i++) {
                         tmpData[i] = (double) buffer[i] / 32768.0;//將數值歸一化
                     }
-                    //18_11_26
                     //s = goertzelDetector.findCarrier_array(tmpData, 20048.0, win_factor, shift_factor, s_len);
                     s = goertzelDetector.findCarrier_array(tmpData, Bw, win_factor, shift_factor, s_len);
                     Log.v("sync","sync:" + s);
