@@ -74,12 +74,6 @@ public class Receiver {
             r = new Recorder(symbol_size, Bw, sym_end, myact);//19_1_29_啟動錄音
             r.start();
             while (!r.getEND) {//判斷有沒有找到END頻率
-                //Log.d(TAG, "Wait for Start");
-              /**  for(int i =0;i<r.ArrSteaming.length;i++) {
-                 Double str = new Double(String.valueOf(r.ArrSteaming[i]));
-                 AL.add(str);
-                 Log.d("AL","AL："+AL);
-                 }**/
 
                     if(myact.anime){
 

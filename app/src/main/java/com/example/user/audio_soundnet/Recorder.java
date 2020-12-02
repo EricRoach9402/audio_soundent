@@ -16,12 +16,14 @@ import java.io.OutputStreamWriter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class Recorder {
     private AudioRecord recorder;
     private GoertzelDetector goertzelDetector;
     private Receiver receiver;
     private int lenght,old_lenght=0;
+    private boolean timeout = false;
 
     static final String TAG = "Recorder";
     private static final int RECORDER_BPP = 16;
@@ -47,8 +49,8 @@ public class Recorder {
 
     private MainActivity may;
     private boolean stop_anime;
-    public static byte [] ArrSteaming = new byte[200000];
-    public static byte [] zeroArray = new byte[4044],mixArray = new byte[300000];
+    public static byte [] ArrSteaming = new byte[300000];
+    public static byte [] zeroArray = new byte[4044],mixArray = new byte[400000];
 
 
     public Recorder(double symbol_size, double Bw, double sym_END, final MainActivity act) {
@@ -261,7 +263,7 @@ public class Recorder {
 
                         int mInd_end = findMax(s_end, s_len);
 
-                        if (s_end[mInd_end] > may.threshold) {
+                        if (s_end[mInd_end] > may.threshold || timeout) {
                             Log.d(TAG, "find Max_END, recLen = " + recLen);
                             Log.d(TAG, "find Max_END, s_end[mInd_end] = " + s_end[mInd_end]);
                             System.arraycopy(zeroArray,0,mixArray,0,zeroArray.length);
@@ -296,6 +298,7 @@ public class Recorder {
                         }
                         //System.arraycopy(bytes2,0,ArrSteaming,lenght,bytes2.length);
                         old_lenght += 9600;
+                        if (old_lenght >= 192000)timeout = true;
 
                         Log.d("Arr","Arr="+lenght);
                     }
