@@ -15,8 +15,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
-import java.util.ArrayList;
-import java.util.Timer;
+
 
 public class Recorder {
     private AudioRecord recorder;
