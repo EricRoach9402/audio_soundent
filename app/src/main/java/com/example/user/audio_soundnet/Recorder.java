@@ -289,7 +289,7 @@ public class Recorder {
                         byte[] bytes2 = new byte[buffer.length * 2];
                         ByteBuffer.wrap(bytes2).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().put(buffer);
                         os.write(bytes2);
-                        lenght += bytes2.length;
+                        //lenght += bytes2.length;
                         //ArrSteaming = new byte[65535];
                         for (int x = 0;x < 9600;x++){
                             ArrSteaming[x + old_lenght] = bytes2[x];
@@ -298,7 +298,7 @@ public class Recorder {
                         old_lenght += 9600;
                         if (old_lenght >= 192000)timeout = true;
 
-                        Log.d("Arr","Arr="+lenght);
+                        //Log.d("Arr","Arr="+lenght);
                     }
 
                 } catch (IOException e) {
