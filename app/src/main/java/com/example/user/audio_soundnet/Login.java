@@ -12,6 +12,19 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
+
 public class Login extends AppCompatActivity {
 
 
@@ -40,8 +53,10 @@ public class Login extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(Login.this,MainActivity.class);
-                startActivity(intent);
+                String entername = username.getText().toString();
+                String enterpassword = password.getText().toString();
+                sendPost(entername,enterpassword);
+
             }
         });
         google.setOnClickListener(new View.OnClickListener() {
@@ -96,5 +111,46 @@ public class Login extends AppCompatActivity {
                 frame2.setVisibility(View.VISIBLE);
             }
         },2700);
+    }
+    private  void sendPost(String username,String password){
+        String json = "{\"username\":\"" + username + "\",\"password\":\""+password+"\"}";
+        /**建立連線*/
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+                .build();
+        /**設置傳送所需夾帶的內容*/
+        RequestBody body = RequestBody.create(
+                MediaType.parse("application/json"), json);
+        /**設置傳送需求*/
+        Request request = new Request.Builder()
+                .url("http://172.20.10.4:5000/applogin")
+                .post(body)
+                .build();
+        /**設置回傳*/
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                final String errorMMessage = e.getMessage();
+                Login.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //tvRes.setText(errorMMessage);
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+                final String Message = response.body().string();
+                Login.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent= new Intent(Login.this,MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
     }
 }
