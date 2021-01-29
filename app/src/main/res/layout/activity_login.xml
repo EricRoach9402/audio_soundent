@@ -6,6 +6,23 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
+    <com.jetradarmobile.snowfall.SnowfallView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#C4E1FF"
+        app:snowflakeAlphaMax="160"
+        app:snowflakeAlphaMin="150"
+        app:snowflakeAngleMax="5"
+        app:snowflakeImage="@drawable/snowflake"
+        app:snowflakeSizeMax="32dp"
+        app:snowflakeSizeMin="8dp"
+        app:snowflakeSpeedMax="12"
+        app:snowflakeSpeedMin="4"
+        app:snowflakesAlreadyFalling="false"
+        app:snowflakesFadingEnabled="true"
+        app:snowflakesNum="250"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <ImageView
         android:id="@+id/Dolphin"
@@ -37,25 +54,23 @@
         android:layout_width="574dp"
         android:layout_height="72dp"
         app:layout_constraintBottom_toBottomOf="@+id/password"
-        app:layout_constraintEnd_toEndOf="@+id/password"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="@+id/password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/password"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/login" />
+        app:layout_constraintVertical_bias="0.428"
+        app:srcCompat="@drawable/rectangle" />
 
     <ImageView
         android:id="@+id/frame1"
         android:layout_width="551dp"
         android:layout_height="73dp"
-        android:layout_marginBottom="136dp"
+
+
         app:layout_constraintBottom_toBottomOf="@+id/username"
-        app:layout_constraintEnd_toEndOf="@+id/username"
-        app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="@+id/username"
+        app:layout_constraintEnd_toEndOf="@+id/frame2"
+        app:layout_constraintStart_toStartOf="@+id/frame2"
         app:layout_constraintTop_toTopOf="@+id/username"
-        app:layout_constraintVertical_bias="0.028"
-        app:srcCompat="@drawable/login" />
+        app:srcCompat="@drawable/rectangle" />
 
     <EditText
         android:id="@+id/username"
@@ -66,9 +81,10 @@
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintVertical_bias="0.525" />
 
     <EditText
         android:id="@+id/password"
@@ -83,18 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/frame1"
         app:layout_constraintVertical_bias="0.096" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="454dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="44dp"
-        android:background="@drawable/login2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/frame2"
-        app:layout_constraintHorizontal_bias="0.57"
-        app:layout_constraintStart_toStartOf="@+id/frame2"
-        app:layout_constraintTop_toBottomOf="@+id/frame2"
-        app:layout_constraintVertical_bias="0.0" />
+
 
     <android.support.constraint.Group
         android:id="@+id/group"
@@ -112,10 +117,11 @@
         android:id="@+id/google"
         android:layout_width="60dp"
         android:layout_height="63dp"
+        android:layout_marginBottom="88dp"
         android:background="@drawable/google"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintHorizontal_bias="0.407"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.705" />
@@ -124,13 +130,28 @@
         android:id="@+id/facebook"
         android:layout_width="68dp"
         android:layout_height="59dp"
+        android:layout_marginBottom="92dp"
         android:background="@drawable/facebook"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toEndOf="@+id/google"
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.702" />
 
-
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:id="@+id/transition_button"
+        android:layout_width="388dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="44dp"
+        android:text="Login"
+        android:textColor="#000000"
+        app:defaultColor="#FFF8D7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/frame2"
+        app:layout_constraintStart_toStartOf="@+id/frame2"
+        app:layout_constraintTop_toBottomOf="@+id/frame2"
+        app:layout_constraintVertical_bias="0.0"
+        app:loaderColor="#FFBB77"
+        tools:ignore="MissingConstraints" />/>
 </android.support.constraint.ConstraintLayout>

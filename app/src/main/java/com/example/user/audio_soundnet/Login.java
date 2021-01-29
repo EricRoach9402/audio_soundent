@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.royrodriguez.transitionbutton.TransitionButton;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -32,6 +34,8 @@ public class Login extends AppCompatActivity {
     EditText username,password;
     Button button,google,facebook;
     ImageView frame1,frame2;
+    boolean isSuccessful = false;
+    private TransitionButton transitionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,28 +52,53 @@ public class Login extends AppCompatActivity {
         facebook = (Button)findViewById(R.id.facebook);
         frame1 = (ImageView)findViewById(R.id.frame1);
         frame2 = (ImageView)findViewById(R.id.frame2);
+        transitionButton = findViewById(R.id.transition_button);
 
         Opening();
-        button.setOnClickListener(new View.OnClickListener() {
+        transitionButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                // Start the loading animation when the user tap the button
+                transitionButton.startAnimation();
                 String entername = username.getText().toString();
                 String enterpassword = password.getText().toString();
                 sendPost(entername,enterpassword);
 
+                // Do your networking task or background work here.
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // Choose a stop animation if your call was succesful or not
+                        if (isSuccessful) {
+                            transitionButton.stopAnimation(TransitionButton.StopAnimationStyle.EXPAND, new TransitionButton.OnAnimationStopEndListener() {
+                                @Override
+                                public void onAnimationStopEnd() {
+                                    Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                                    startActivity(intent);
+                                }
+                            });
+                        } else {
+                            transitionButton.stopAnimation(TransitionButton.StopAnimationStyle.SHAKE, null);
+                        }
+                    }
+                }, 2000);
             }
         });
         google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this,checkin.class);
+                Intent intent = new Intent(Login.this,MainActivity.class);
                 startActivity(intent);
             }
         });
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent intent = new Intent(Login.this, com.example.user.audio_soundnet.Animation.class);
+                startActivity(intent);
             }
         });
     }
@@ -94,21 +123,23 @@ public class Login extends AppCompatActivity {
         cm.setFillAfter(true);
         username.setVisibility(View.INVISIBLE);
         password.setVisibility(View.INVISIBLE);
-        button.setVisibility(View.INVISIBLE);
+        //button.setVisibility(View.INVISIBLE);
         google.setVisibility(View.INVISIBLE);
         facebook.setVisibility(View.INVISIBLE);
         frame1.setVisibility(View.INVISIBLE);
         frame2.setVisibility(View.INVISIBLE);
+        transitionButton.setVisibility(View.INVISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 username.setVisibility(View.VISIBLE);
                 password.setVisibility(View.VISIBLE);
-                button.setVisibility(View.VISIBLE);
+                //button.setVisibility(View.VISIBLE);
                 google.setVisibility(View.VISIBLE);
                 facebook.setVisibility(View.VISIBLE);
                 frame1.setVisibility(View.VISIBLE);
                 frame2.setVisibility(View.VISIBLE);
+                transitionButton.setVisibility(View.VISIBLE);
             }
         },2700);
     }
@@ -135,6 +166,7 @@ public class Login extends AppCompatActivity {
                 Login.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        isSuccessful = false;
                         //tvRes.setText(errorMMessage);
                     }
                 });
@@ -143,13 +175,17 @@ public class Login extends AppCompatActivity {
             @Override
             public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
                 final String Message = response.body().string();
-                Login.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Intent intent= new Intent(Login.this,MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
+                if (Message.equals("ok")) {
+                    Login.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            isSuccessful = true;
+                        }
+                    });
+                }
+                else{
+                    isSuccessful = false;
+                }
             }
         });
     }

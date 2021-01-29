@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -21,15 +22,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 import com.example.user.audio_soundnet.OWLoadingAniment.OWLoading;
+//import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,9 +49,9 @@ import java.util.TimerTask;
 public class  MainActivity extends AppCompatActivity {
 
     public static double sample_rate;
-    public static   double duration;
-    public static   double symbol_size;
-    public  static double sample_period;
+    public static double duration;
+    public static double symbol_size;
+    public static double sample_period;
     public static String recovered_string;
     TextView text;
     private Receiver receiver;
@@ -56,12 +60,12 @@ public class  MainActivity extends AppCompatActivity {
     private static final int REQUEST_WRITE_STORAGE = 112;
     private Recorder r;
     private Context context;
-    public int fstart,anime2=0;
+    public int fstart, anime2 = 0;
     public double threshold;
 
-    private double Bw,sym_end;
-    boolean b1=false;
-    public boolean anime=false;
+    private double Bw, sym_end;
+    boolean b1 = false;
+    public boolean anime = false;
 
     Button bs;
 
@@ -79,43 +83,43 @@ public class  MainActivity extends AppCompatActivity {
 
         sample_rate = 48000.0;//設定取樣率
         sample_period = 1 / sample_rate;
-        symbol_size=0.125;//設定symbol頻率時間長度
+        symbol_size = 0.125;//設定symbol頻率時間長度
         fstart = 18000;//設定起始symbol頻率
         Bw = 20048.0;//設定sync頻率和最大頻率
-        sym_end=20400.0;//設定END頻率
-        threshold=1;//找sync頻率和END頻率的ESD值
+        sym_end = 20400.0;//設定END頻率
+        threshold = 1;//找sync頻率和END頻率的ESD值
 
-        text=(TextView) findViewById(R.id.dm_text);
-        bs=(Button) findViewById(R.id.reStart);
+        text = (TextView) findViewById(R.id.dm_text);
+        bs = (Button) findViewById(R.id.reStart);
 
-         owLoading=(OWLoading)findViewById(R.id.owloading);//5/1
-
+        //text.setVisibility(View.INVISIBLE);
+        owLoading = (OWLoading) findViewById(R.id.owloading);//5/1
 
 
         bs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(text.getText().equals("StartReceiver")||text.getText().equals("Loading...")){
+                if (text.getText().equals("StartReceiver") || text.getText().equals("Loading...")) {
 
-                    Toast.makeText(context,"正在收音或錄音中",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "正在收音或錄音中", Toast.LENGTH_SHORT).show();
 
-                }else{
+                } else {
 
                     text.setText("StartReceiver");
                     recorder(context);
-                    Toast.makeText(context,"開始收音",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "開始收音", Toast.LENGTH_SHORT).show();
 
                 }
             }
         });
 
-       context=getApplicationContext();
-       recorder(context);//19_1_29_讀音檔
+        context = getApplicationContext();
+        recorder(context);//19_1_29_讀音檔
 
         /*----4/22--------------------*/
 
-        currentApiVersion=Build.VERSION.SDK_INT;
+        currentApiVersion = Build.VERSION.SDK_INT;
 
         final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -125,8 +129,7 @@ public class  MainActivity extends AppCompatActivity {
                 | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
         // This work only for android 4.4+
-        if(currentApiVersion >= Build.VERSION_CODES.KITKAT)
-        {
+        if (currentApiVersion >= Build.VERSION_CODES.KITKAT) {
 
             getWindow().getDecorView().setSystemUiVisibility(flags);
 
@@ -135,14 +138,11 @@ public class  MainActivity extends AppCompatActivity {
             // show up and won't hide
             final View decorView = getWindow().getDecorView();
             decorView
-                    .setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener()
-                    {
+                    .setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
 
                         @Override
-                        public void onSystemUiVisibilityChange(int visibility)
-                        {
-                            if((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0)
-                            {
+                        public void onSystemUiVisibilityChange(int visibility) {
+                            if ((visibility & View.SYSTEM_UI_FLAG_FULLSCREEN) == 0) {
                                 decorView.setSystemUiVisibility(flags);
                             }
                         }
@@ -154,63 +154,61 @@ public class  MainActivity extends AppCompatActivity {
 
     }
 
-    private  void recorder(final Context context) {
+    private void recorder(final Context context) {
 
-            new Thread(){
-                public void run(){
-                    try{
+        new Thread() {
+            public void run() {
+                try {
 
-                        receiver = new Receiver("recorded.wav", fstart, Bw, sym_end,sample_rate, symbol_size, duration, context,MainActivity.this);
-                        receiver.record();//錄音
-                        receiver.demodulate();//解調
-                        recovered_string = receiver.getRecoverd_string();
+                    receiver = new Receiver("recorded.wav", fstart, Bw, sym_end, sample_rate, symbol_size, duration, context, MainActivity.this);
+                    receiver.record();//錄音
+                    receiver.demodulate();//解調
+                    recovered_string = receiver.getRecoverd_string();
 
-                }catch (Exception e){
-                        e.printStackTrace();
-                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                    try {
+                try {
 
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                                //181217----偵測否是網址
-                                if (recovered_string.equals("CbST")){
+                            //181217----偵測否是網址
+                            if (recovered_string.equals("CbST")) {
+                                Intent intent = new Intent(MainActivity.this,Animation.class);
+                                startActivity(intent);
+                                //interNet(recovered_string);//4/23//5/1//19/9/17
+                                text.setText("解調完成:\n" + recovered_string);
 
-                                    interNet(recovered_string);//4/23//5/1//19/9/17
-                                    text.setText("解調完成:\n"+recovered_string);
+                            } else if (recovered_string.equals("NLGK")) {
 
-                                }else if(recovered_string.equals("NLGK")){
+                                interNet(recovered_string);
+                                text.setText("解調完成:\n" + recovered_string);
 
-                                    interNet(recovered_string);
-                                    text.setText("解調完成:\n"+recovered_string);
-
-                                }
-                                else if(recovered_string.equals("gB2h")){
-                                    interNet(recovered_string);
-                                    text.setText("解調完成:\n"+recovered_string);
-                                }
-                                else {
-                                    text.setText("持續收音:\n"+recovered_string);//更改為繼續收音
-                                    recorder(context);
-                                }
+                            } else if (recovered_string.equals("gB2h")) {
+                                interNet(recovered_string);
+                                text.setText("解調完成:\n" + recovered_string);
+                            } else {
+                                text.setText("持續收音:\n" + recovered_string);//更改為繼續收音
+                                recorder(context);
                             }
-                        });
+                        }
+                    });
 
-                    }catch (final Exception e){
-                        e.printStackTrace();
-                    }
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                }
             }
         }.start();
 
     }
 
 
+    private void interNet(String str) {
 
-    private void interNet(String str){
-
-        Uri uri = Uri.parse("https://t.ly/"+str);
+        Uri uri = Uri.parse("https://t.ly/" + str);
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
 
@@ -310,7 +308,7 @@ public class  MainActivity extends AppCompatActivity {
         }
     }
 
-//4/22-------------------------------------------------------------
+    //4/22-------------------------------------------------------------
     @SuppressLint("NewApi")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -326,33 +324,46 @@ public class  MainActivity extends AppCompatActivity {
         }
     }
 
-  public Handler mowLoading=new Handler(){
-       @Override
-       public void handleMessage(Message msg) {
-           super.handleMessage(msg);
+    public Handler mowLoading = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
 
-           switch (msg.what){
+            switch (msg.what) {
 
-               case 1:
-                   runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           owLoading.startAnim();
+                case 1:
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            owLoading.startAnim();
 
-                       }
-                   });
-                   break;
-               case 0:
-                   runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           owLoading.stopAnim();
-                       }
-                   });
-                   break;
-           }
+                        }
+                    });
+                    break;
+                case 0:
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            owLoading.stopAnim();
+                        }
+                    });
+                    break;
+            }
 
-       }
-   };
+        }
+    };
 
+    /*private void Button_effects() {
+        ShineButton shineButtonJava = new ShineButton(this);
+        shineButtonJava.setBtnColor(Color.GRAY);
+        shineButtonJava.setBtnFillColor(Color.RED);
+        shineButtonJava.setShapeResource(R.raw.heart);
+        shineButtonJava.setAllowRandomColor(true);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(100, 100);
+        shineButtonJava.setLayoutParams(layoutParams);
+        ViewGroup linearLayout = null;
+        if (linearLayout != null) {
+            //linearLayout.addView(shineButtonJava);
+        }
+    }*/
 }

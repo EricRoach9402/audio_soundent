@@ -14,8 +14,8 @@ import android.widget.ImageView;
 
 public class checkin extends AppCompatActivity {
 
-    ImageView sin_to_cos_to_sin;
-    Button button2;
+    ImageView sin_to_cos_to_sin,imageView;
+    Button button2,checkin;
 
     AnimatedVectorDrawable avd2;
     AnimatedVectorDrawableCompat avd;
@@ -28,7 +28,26 @@ public class checkin extends AppCompatActivity {
         setContentView(R.layout.activity_checkin);
 
         sin_to_cos_to_sin = (ImageView)findViewById(R.id.sin_to_cos_to_sin);
+        imageView =(ImageView)findViewById(R.id.imageView);
         button2 = (Button)findViewById(R.id.button2);
+        checkin = (Button)findViewById(R.id.checkin);
+
+
+        checkin.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @Override
+            public void onClick(View view) {
+                Drawable drawable = imageView.getDrawable();
+
+                if(drawable instanceof AnimatedVectorDrawableCompat){
+                    avd = (AnimatedVectorDrawableCompat) drawable;
+                    avd.start();
+                }else if(drawable instanceof AnimatedVectorDrawable) {
+                    avd2 = (AnimatedVectorDrawable) drawable;
+                    avd2.start();
+                }
+            }
+        });
 
         button2.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
