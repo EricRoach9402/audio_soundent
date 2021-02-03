@@ -3,9 +3,14 @@ package com.example.user.audio_soundnet;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.annotation.RequiresApi;
+//import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
+//import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

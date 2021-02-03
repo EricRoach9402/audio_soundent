@@ -3,6 +3,8 @@ package com.example.user.audio_soundnet;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,10 +16,16 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.UiThread;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.annotation.UiThread;
+//import android.support.v4.app.ActivityCompat;
+//import android.support.v4.content.ContextCompat;
+//import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.annotation.UiThread;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,6 +41,10 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import com.example.user.audio_soundnet.OWLoadingAniment.OWLoading;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 //import com.sackcentury.shinebuttonlib.ShineButton;
 
 import java.io.File;
@@ -91,29 +103,42 @@ public class  MainActivity extends AppCompatActivity {
 
         text = (TextView) findViewById(R.id.dm_text);
         bs = (Button) findViewById(R.id.reStart);
-
         //text.setVisibility(View.INVISIBLE);
         owLoading = (OWLoading) findViewById(R.id.owloading);//5/1
-
-
         bs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (text.getText().equals("StartReceiver") || text.getText().equals("Loading...")) {
-
                     Toast.makeText(context, "正在收音或錄音中", Toast.LENGTH_SHORT).show();
-
                 } else {
-
                     text.setText("StartReceiver");
                     recorder(context);
                     Toast.makeText(context, "開始收音", Toast.LENGTH_SHORT).show();
-
                 }
             }
         });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Create channel to show notifications.
+            String channelId  = "default_notification_channel_id";
+            String channelName = "default_notification_channel_name";
+            NotificationManager notificationManager =
+                    getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(new NotificationChannel(channelId,
+                    channelName, NotificationManager.IMPORTANCE_LOW));
+        }
 
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Log.i("MainActivity", "getInstanceId failed");
+                    return;
+                }
+                // Get new Instance ID token
+                String token = task.getResult().getToken();
+                Log.i("MainActivity","token "+token);
+            }
+        });
         context = getApplicationContext();
         recorder(context);//19_1_29_讀音檔
 
