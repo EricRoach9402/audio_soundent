@@ -1,4 +1,4 @@
-package com.example.user.audio_soundnet;
+ package com.example.user.audio_soundnet;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -264,8 +264,8 @@ public class Recorder {
                         if (s_end[mInd_end] > may.threshold || timeout) {
                             Log.d(TAG, "find Max_END, recLen = " + recLen);
                             Log.d(TAG, "find Max_END, s_end[mInd_end] = " + s_end[mInd_end]);
-                            System.arraycopy(zeroArray,0,mixArray,0,zeroArray.length);
-                            System.arraycopy(ArrSteaming,0,mixArray,4045, ArrSteaming.length);
+                            System.arraycopy(zeroArray,0,mixArray,0,zeroArray.length);//充滿前面4044個抬頭
+                            System.arraycopy(ArrSteaming,0,mixArray,4045, ArrSteaming.length);//取得Buffer資料
                             getEND = true;
                         }
 

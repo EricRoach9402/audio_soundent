@@ -46,10 +46,10 @@ public class GoertzelDetector {
         for (int i = 0; i < len; i++) {
 
             if(signal.length-i*shift_N>=win_N){
+                //arraycopy:來源,起始索引,目的地,起始索引,複製長度
                 System.arraycopy(signal, i * shift_N, x, 0, win_N);
                 res[i] = findCarrier_value(x, fin, win_N);
             }
-
         }
         return res;
     }

@@ -1,5 +1,7 @@
 package com.example.user.audio_soundnet;
 
+import android.util.Log;
+
 import java.io.*;
 
 public class WavFile {
@@ -346,8 +348,10 @@ public class WavFile {
     {
         long val = 0;
 
+        //bytesPerSample = 2
         for (int b=0 ; b<bytesPerSample ; b++)
         {
+            //Log.e("DolphinWAV","bytesPerSample:" + bytesPerSample);
             if (bufferPointer == bytesRead)
             {
                 int read = iStream.read(r.mixArray, 0, r.mixArray.length);
@@ -359,8 +363,9 @@ public class WavFile {
             int v = r.mixArray[bufferPointer];
             if (b < bytesPerSample-1 || bytesPerSample == 1) v &= 0xFF;
             val += v << (b * 8);
-
+            //Log.e("DolphinWAV","r.mixArray[bufferPointer]:" + r.mixArray[bufferPointer] + ",val:" + val);
             bufferPointer ++;
+            //Log.e("Dolphintest","bufferPointer:"+bufferPointer);
         }
 
         return val;
@@ -575,8 +580,15 @@ public class WavFile {
 
             for (int c=0 ; c<numChannels ; c++)
             {
+                //Log.e("DolphinWAV","frameCounter:"+frameCounter+",numFrames:"+numFrames+",numChannels:"+numChannels);
+                //frameCounter:從0開始計數至numFrames
+                //numFrames:38400
+                //numChannels:1
+                //floatOffset:0.0
+                //floatScale:32768.0
                 sampleBuffer[offset] = floatOffset + (double) readSample() / floatScale;
                 offset ++;
+                //Log.e("Dolphintest","sampleBuffer:"+sampleBuffer[offset]);
             }
 
             frameCounter ++;

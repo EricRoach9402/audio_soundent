@@ -50,10 +50,15 @@
         tools:layout_editor_absoluteX="116dp"
         tools:layout_editor_absoluteY="217dp" />
 
-    <ImageView
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:text="Sign up"
+        android:layout_width="388dp"
+        android:layout_height="60dp"
+        android:textColor="#000000"
+        app:defaultColor="#FFF8D7"
+        app:loaderColor="#FFBB77"
+        tools:ignore="MissingConstraints"
         android:id="@+id/frame2"
-        android:layout_width="574dp"
-        android:layout_height="72dp"
         app:layout_constraintBottom_toBottomOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,12 +66,15 @@
         app:layout_constraintVertical_bias="0.428"
         app:srcCompat="@drawable/rectangle" />
 
-    <ImageView
+    <com.royrodriguez.transitionbutton.TransitionButton
+        android:text="sign in"
+        android:layout_width="388dp"
+        android:layout_height="60dp"
+        android:textColor="#000000"
+        app:defaultColor="#FFF8D7"
+        app:loaderColor="#FFBB77"
+        tools:ignore="MissingConstraints"
         android:id="@+id/frame1"
-        android:layout_width="551dp"
-        android:layout_height="73dp"
-
-
         app:layout_constraintBottom_toBottomOf="@+id/username"
         app:layout_constraintEnd_toEndOf="@+id/frame2"
         app:layout_constraintStart_toStartOf="@+id/frame2"
@@ -99,7 +107,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/frame1"
         app:layout_constraintVertical_bias="0.096" />
-
 
 
     <androidx.constraintlayout.widget.Group
@@ -140,19 +147,4 @@
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.702" />
 
-    <com.royrodriguez.transitionbutton.TransitionButton
-        android:id="@+id/transition_button"
-        android:layout_width="388dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="44dp"
-        android:text="Login"
-        android:textColor="#000000"
-        app:defaultColor="#FFF8D7"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/frame2"
-        app:layout_constraintStart_toStartOf="@+id/frame2"
-        app:layout_constraintTop_toBottomOf="@+id/frame2"
-        app:layout_constraintVertical_bias="0.0"
-        app:loaderColor="#FFBB77"
-        tools:ignore="MissingConstraints" />/>
 </androidx.constraintlayout.widget.ConstraintLayout>

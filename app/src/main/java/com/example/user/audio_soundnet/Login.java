@@ -6,6 +6,7 @@ import android.os.Handler;
 //import android.support.v7.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -14,8 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.royrodriguez.transitionbutton.TransitionButton;
+
+import org.java_websocket.handshake.ServerHandshake;
 import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
+import java.net.URI;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,11 +32,17 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class Login extends AppCompatActivity {
 
+    private WebSocket WebSocket;
+    private WebSocketConnection WebSocketConnection;
+    private MainActivity mac;
 
-    ImageView Dolphin,DolphinMaster,Soundent;
-    EditText username,password;
-    Button button,google,facebook;
-    ImageView frame1,frame2;
+    ImageView Dolphin, DolphinMaster, Soundent;
+    EditText username, password;
+    Button button, google, facebook, frame1, frame2;
+    URI uri = URI.create(WebSocketConnection.ws);
+
+    public static String UID,SOUNDID,doorID;
+    String WebReceive;
     boolean isSuccessful = false;
     private TransitionButton transitionButton;
 
@@ -41,24 +51,42 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Dolphin = (ImageView)findViewById(R.id.Dolphin);
-        DolphinMaster = (ImageView)findViewById(R.id.DolphinMaster);
-        Soundent = (ImageView)findViewById(R.id.Soundent);
-        username = (EditText)findViewById(R.id.username);
-        password = (EditText)findViewById(R.id.password);
-        button = (Button)findViewById(R.id.button);
-        google = (Button)findViewById(R.id.google);
-        facebook = (Button)findViewById(R.id.facebook);
-        frame1 = (ImageView)findViewById(R.id.frame1);
-        frame2 = (ImageView)findViewById(R.id.frame2);
-        transitionButton = findViewById(R.id.transition_button);
+        Dolphin = (ImageView) findViewById(R.id.Dolphin);
+        DolphinMaster = (ImageView) findViewById(R.id.DolphinMaster);
+        Soundent = (ImageView) findViewById(R.id.Soundent);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
+        button = (Button) findViewById(R.id.button);
+        google = (Button) findViewById(R.id.google);
+        facebook = (Button) findViewById(R.id.facebook);
+        frame1 = (Button) findViewById(R.id.frame1);
+        frame2 = (Button) findViewById(R.id.frame2);
+
+        initSocketClient();
 
         Opening();
-        transitionButton.setOnClickListener(new View.OnClickListener() {
+
+        frame1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, FaceID.class);
+                startActivity(intent);
+            }
+        });
+        frame2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Login.this, LoginFaceID.class);
+                startActivity(intent);
+            }
+        });
+
+
+        /*transitionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Start the loading animation when the user tap the button
-                transitionButton.startAnimation();
+                //transitionButton.startAnimation();
                 String entername = username.getText().toString();
                 String enterpassword = password.getText().toString();
                 sendPost(entername,enterpassword);
@@ -85,11 +113,11 @@ public class Login extends AppCompatActivity {
                     }
                 }, 2000);
             }
-        });
+        });*/
         google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this,MainActivity.class);
+                Intent intent = new Intent(Login.this, MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -100,11 +128,106 @@ public class Login extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
-    private void Opening(){
-        Animation am = new TranslateAnimation(500,700,600,100);
-        Animation bm = new TranslateAnimation(500,350,1500,350);
-        Animation cm = new TranslateAnimation(700,550,1600,450);
+    /**
+     * 初始化websocket连接
+     */
+    private void initSocketClient() {
+        URI uri = URI.create(WebSocketConnection.ws);
+        WebSocket = new WebSocket(uri) {
+            @Override
+            public void onMessage(String message) {
+                Log.e("Dolphinweb", "收到的消息：" + message);
+
+                if (message.indexOf("\"webview\"") != -1){
+                    WebReceive = message;
+
+                    int startUID = WebReceive.indexOf("\"uid\"");
+                    int endUID = WebReceive.indexOf(",",startUID);
+                    UID = WebReceive.substring(startUID+7,endUID-1);
+
+                    int startSOUNDID = WebReceive.indexOf("\"soundId\"");
+                    int endSOUNDID = WebReceive.indexOf(",",startSOUNDID);
+                    SOUNDID = WebReceive.substring(startSOUNDID+11,endSOUNDID-1);
+
+                    int startDoorID = WebReceive.indexOf("\"door\"");
+                    int endDoorID = WebReceive.indexOf("}",startDoorID);
+                    doorID = WebReceive.substring(startDoorID+7,endDoorID);
+
+                    Log.e("Dolphinweb", "UID：" + UID);
+                    Log.e("Dolphinweb", "SOUNDID：" + SOUNDID);
+                    Log.e("Dolphinweb", "Door：" + doorID);
+                    closeConnect();
+                    Intent intent = new Intent(Login.this,MainActivity.class);
+                    startActivity(intent);
+
+                }
+
+
+                /*int j = message.indexOf(":");
+                int i = message.indexOf(",");
+                WebReceive = message.substring(j+1,i);
+                Log.d("Dolphinweb","結果:" + WebReceive);
+
+                if (WebReceive.equals("\"door\"")){
+                    //Log.d("Dolphinweb","成功");
+                    //
+                    //WebSocket.send("6js7");
+                    Intent intent = new Intent(Login.this,MainActivity.class);
+                    startActivity(intent);
+                    closeConnect();
+                }*/
+            }
+
+            @Override
+            public void onOpen(ServerHandshake handshakedata) {
+                super.onOpen(handshakedata);
+                Log.e("Dolphinweb", "websocket连接成功");
+            }
+        };
+        connect();
+    }
+
+    /**
+     * 连接websocket
+     */
+    private void connect() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    //connectBlocking多出一个等待操作，会先连接再发送，否则未连接发送会报错
+                    WebSocket.connectBlocking();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 断开连接
+     */
+    private void closeConnect() {
+        try {
+            if (null != WebSocket) {
+                WebSocket.close();
+                Log.e("Dolphinweb", "websocket斷開成功");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            WebSocket = null;
+        }
+    }
+
+
+
+    private void Opening() {
+        Animation am = new TranslateAnimation(500, 700, 600, 100);
+        Animation bm = new TranslateAnimation(500, 350, 1500, 350);
+        Animation cm = new TranslateAnimation(700, 550, 1600, 450);
         am.setDuration(2500);
         bm.setDuration(2500);
         cm.setDuration(2500);
@@ -127,7 +250,7 @@ public class Login extends AppCompatActivity {
         facebook.setVisibility(View.INVISIBLE);
         frame1.setVisibility(View.INVISIBLE);
         frame2.setVisibility(View.INVISIBLE);
-        transitionButton.setVisibility(View.INVISIBLE);
+        //transitionButton.setVisibility(View.INVISIBLE);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -138,54 +261,54 @@ public class Login extends AppCompatActivity {
                 facebook.setVisibility(View.VISIBLE);
                 frame1.setVisibility(View.VISIBLE);
                 frame2.setVisibility(View.VISIBLE);
-                transitionButton.setVisibility(View.VISIBLE);
+                //transitionButton.setVisibility(View.VISIBLE);
             }
-        },2700);
-    }
-    private  void sendPost(String username,String password){
-        String json = "{\"username\":\"" + username + "\",\"password\":\""+password+"\"}";
-        /**建立連線*/
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-                .build();
-        /**設置傳送所需夾帶的內容*/
-        RequestBody body = RequestBody.create(
-                MediaType.parse("application/json"), json);
-        /**設置傳送需求*/
-        Request request = new Request.Builder()
-                .url("http://172.20.10.4:5000/applogin")
-                .post(body)
-                .build();
-        /**設置回傳*/
-        Call call = client.newCall(request);
-        call.enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                final String errorMMessage = e.getMessage();
-                Login.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        isSuccessful = false;
-                        //tvRes.setText(errorMMessage);
-                    }
-                });
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
-                final String Message = response.body().string();
-                if (Message.equals("ok")) {
-                    Login.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            isSuccessful = true;
-                        }
-                    });
-                }
-                else{
-                    isSuccessful = false;
-                }
-            }
-        });
+        }, 2700);
     }
 }
+//    private  void sendPost(String username,String password){
+//        String json = "{\"username\":\"" + username + "\",\"password\":\""+password+"\"}";
+//        /**建立連線*/
+//        OkHttpClient client = new OkHttpClient().newBuilder()
+//                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+//                .build();
+//        /**設置傳送所需夾帶的內容*/
+//        RequestBody body = RequestBody.create(
+//                MediaType.parse("application/json"), json);
+//        /**設置傳送需求*/
+//        Request request = new Request.Builder()
+//                .url("http://172.20.10.4:5000/applogin")
+//                .post(body)
+//                .build();
+//        /**設置回傳*/
+//        Call call = client.newCall(request);
+//        call.enqueue(new Callback() {
+//            @Override
+//            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+//                final String errorMMessage = e.getMessage();
+//                Login.this.runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        isSuccessful = false;
+//                        //tvRes.setText(errorMMessage);
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onResponse(@NotNull Call call, @NotNull final Response response) throws IOException {
+//                final String Message = response.body().string();
+//                if (Message.equals("ok")) {
+//                    Login.this.runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            isSuccessful = true;
+//                        }
+//                    });
+//                }
+//                else{
+//                    isSuccessful = false;
+//                }
+//            }
+//        });
+//    }

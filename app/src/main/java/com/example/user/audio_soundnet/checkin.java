@@ -30,12 +30,12 @@ public class checkin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_checkin);
+        //setContentView(R.layout.activity_checkin);
 
-        sin_to_cos_to_sin = (ImageView)findViewById(R.id.sin_to_cos_to_sin);
-        imageView =(ImageView)findViewById(R.id.imageView);
-        button2 = (Button)findViewById(R.id.button2);
-        checkin = (Button)findViewById(R.id.checkin);
+       // sin_to_cos_to_sin = (ImageView)findViewById(R.id.sin_to_cos_to_sin);
+       // imageView =(ImageView)findViewById(R.id.imageView);
+       // button2 = (Button)findViewById(R.id.button2);
+       // checkin = (Button)findViewById(R.id.checkin);
 
 
         checkin.setOnClickListener(new View.OnClickListener() {

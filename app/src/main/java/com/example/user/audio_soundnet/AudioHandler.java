@@ -19,7 +19,7 @@ public class AudioHandler {
     private static Context context;
     private long n;
 
-    public AudioHandler(Context context,String filename){
+    public AudioHandler(Context context,String filename){//刪除
         this.context=context;
         this.filename=filename;
 
@@ -102,9 +102,11 @@ public class AudioHandler {
         try{
             do{
                 framesRead=wavfile.readFrames(buffer,100);//讀取並返回以bytes對象表示的最多100幀音頻。
+                Log.e("Dolphintest","framesRead:"+framesRead);
                 for(int s=0;s<framesRead;s++){
                     Double temp =(Double)buffer[s];
                     modulated.add(temp);
+                    //Log.e("Dolphintest","temp:"+temp);
                 }
 
             }while (framesRead != 0);

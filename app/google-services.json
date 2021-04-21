@@ -7,64 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:167506434628:android:a6e95750fa5307fd523a11",
-        "android_client_info": {
-          "package_name": "com.android.application"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "167506434628-82rvgiht3m6iubqb1u10cobtsf3vfiu6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDE9eNccbgmn9Jb94WKqik9mn-QMgDu_2M"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "167506434628-82rvgiht3m6iubqb1u10cobtsf3vfiu6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:167506434628:android:9aa00310b44b8a92523a11",
-        "android_client_info": {
-          "package_name": "com.example.push"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "167506434628-82rvgiht3m6iubqb1u10cobtsf3vfiu6.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDE9eNccbgmn9Jb94WKqik9mn-QMgDu_2M"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "167506434628-82rvgiht3m6iubqb1u10cobtsf3vfiu6.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:167506434628:android:5f2a00871b742414523a11",
         "android_client_info": {
           "package_name": "com.example.user.audio_soundnet3"

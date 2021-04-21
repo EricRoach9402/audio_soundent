@@ -13,10 +13,15 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.google.common.util.concurrent.Service;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-public class MyFirebaseService  extends FirebaseMessagingService {
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+public class MyFirebaseService  extends FirebaseMessagingService  {
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -28,10 +33,8 @@ public class MyFirebaseService  extends FirebaseMessagingService {
             Log.i("MyFirebaseService","body "+remoteMessage.getNotification().getBody());
             sendNotification(remoteMessage.getNotification().getTitle(),
                     remoteMessage.getNotification().getBody());
-
         }
     }
-
 
     @Override
     public void onNewToken(String s) {
@@ -69,4 +72,5 @@ public class MyFirebaseService  extends FirebaseMessagingService {
 
         notificationManager.notify(0, notificationBuilder.build());
     }
+
 }

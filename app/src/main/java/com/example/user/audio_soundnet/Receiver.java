@@ -92,12 +92,11 @@ public class Receiver {
                 Thread.sleep(100);
             }
 
-
             r.stop();//錄音結束
             stopanime_OWL();
             audio_handler = new AudioHandler(context, file_name);
             modulated = audio_handler.read();//讀錄音檔;嘗試將Buffer直接加入modulated
-            ByteToArrayList = audio_handler.conversion(r.ArrSteaming);
+            //ByteToArrayList = audio_handler.conversion(r.ArrSteaming);
             Log.d("Receiver", "This is the size of modulated(audio_read): " + modulated.size());
             concatinateRecording();
             goertzel_det = new GoertzelDetector(symbol_size, sample_rate);//goertzel計算設定
