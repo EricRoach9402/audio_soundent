@@ -124,7 +124,7 @@ public class Login extends AppCompatActivity {
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, com.example.user.audio_soundnet.Animation.class);
+                Intent intent = new Intent(Login.this, com.example.user.audio_soundnet.MainMusic.class);
                 startActivity(intent);
             }
         });

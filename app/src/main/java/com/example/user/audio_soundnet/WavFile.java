@@ -347,27 +347,24 @@ public class WavFile {
     private long readSample() throws IOException, WavFileException
     {
         long val = 0;
-
         //bytesPerSample = 2
         for (int b=0 ; b<bytesPerSample ; b++)
         {
             //Log.e("DolphinWAV","bytesPerSample:" + bytesPerSample);
             if (bufferPointer == bytesRead)
             {
-                int read = iStream.read(r.mixArray, 0, r.mixArray.length);
+                int read = iStream.read(r.ArrSteaming, 0, r.ArrSteaming.length);
                 if (read == -1) throw new WavFileException("Not enough data available");
                 bytesRead = read;
                 bufferPointer = 0;
             }
-
-            int v = r.mixArray[bufferPointer];
+            int v = r.ArrSteaming[bufferPointer];
             if (b < bytesPerSample-1 || bytesPerSample == 1) v &= 0xFF;
             val += v << (b * 8);
             //Log.e("DolphinWAV","r.mixArray[bufferPointer]:" + r.mixArray[bufferPointer] + ",val:" + val);
             bufferPointer ++;
             //Log.e("Dolphintest","bufferPointer:"+bufferPointer);
         }
-
         return val;
     }
 
@@ -590,7 +587,6 @@ public class WavFile {
                 offset ++;
                 //Log.e("Dolphintest","sampleBuffer:"+sampleBuffer[offset]);
             }
-
             frameCounter ++;
         }
 

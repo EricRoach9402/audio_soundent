@@ -29,11 +29,11 @@ public class Recorder {
     private static final String AUDIO_RECORDER_FILE_EXT_WAV = "recorded.wav";
     private static final String AUDIO_RECORDER_FOLDER = "My_Audio_FSK";
     private static final String AUDIO_RECORDER_TEMP_FILE = "recorded.raw";
-    private static final int RECORDER_SAMPLERATE = 48000;
-    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;
-    private static final int RECORDER_CHANNELS_INT = 1;
-
+    private static final int RECORDER_SAMPLERATE = 48000; //取樣率
+    private static final int RECORDER_CHANNELS = AudioFormat.CHANNEL_IN_MONO;//單聲道
+    private static final int RECORDER_CHANNELS_INT = 1; //
     private static final int RECORDER_AUDIO_ENCODING = AudioFormat.ENCODING_PCM_16BIT;
+
     static final String dataFile = "goertzelData.txt";
 
     //private int bufferSize = 200000;
@@ -231,6 +231,9 @@ public class Recorder {
 
         while (isRecording) {
             recorder.read(buffer, 0, buffer.length);
+            for (int t = 0;t < buffer.length; t ++) {
+                //Log.d("Goertzel", "I16Array = " + buffer[t]);
+            }
             if (log1) {
                 Log.d(TAG, "audio buffer len = " + buffer.length);
                 log1 = false;
@@ -242,9 +245,22 @@ public class Recorder {
                     double tmpData[] = new double[buffer.length];
                     for (int i = 0; i < buffer.length; i++) {
                         tmpData[i] = (double) buffer[i] / 32768.0;//將數值歸一化
+                        //Log.d("Goertzel","tmpData: " + tmpData[i]);
                     }
+                    Double max = tmpData[0];
+                    for (int i = 0;i < tmpData.length;i++){
+                        if (max < tmpData[i]){
+                            max = tmpData[i];
+                        }
+                    }
+                    Log.v("Dolphinmax","Max:" + max);
+
                     //s = goertzelDetector.findCarrier_array(tmpData, 20048.0, win_factor, shift_factor, s_len);
+                    //Log.v("Goertzel","Bw:" + Bw + "win_factor: " + win_factor + "shift_factor: " + shift_factor);
                     s = goertzelDetector.findCarrier_array(tmpData, Bw, win_factor, shift_factor, s_len);
+                    for (int i = 0;i < s.length;i++){
+                        Log.d("Dolphin","s: " + s[i]);
+                    }
                     Log.v("sync","sync:" + s);
 
                     for (int i = 0; i < s_len; i++) {
@@ -257,6 +273,7 @@ public class Recorder {
                     if(recStart) {
 
                         double[] s_end=new double[s_len];
+
                         s_end=goertzelDetector.findCarrier_array(tmpData, sym_end, win_factor, shift_factor, s_len);
 
                         int mInd_end = findMax(s_end, s_len);

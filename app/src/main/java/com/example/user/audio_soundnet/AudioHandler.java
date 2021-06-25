@@ -102,13 +102,12 @@ public class AudioHandler {
         try{
             do{
                 framesRead=wavfile.readFrames(buffer,100);//讀取並返回以bytes對象表示的最多100幀音頻。
-                Log.e("Dolphintest","framesRead:"+framesRead);
+                //Log.e("Dolphintest","framesRead:"+framesRead);
                 for(int s=0;s<framesRead;s++){
                     Double temp =(Double)buffer[s];
                     modulated.add(temp);
-                    //Log.e("Dolphintest","temp:"+temp);
+                    //Log.e("Dolphintest","modulated:"+temp);
                 }
-
             }while (framesRead != 0);
         }catch (Exception e){
             e.printStackTrace();

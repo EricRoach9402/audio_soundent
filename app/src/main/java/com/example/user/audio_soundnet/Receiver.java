@@ -202,6 +202,7 @@ public class Receiver {
         }
         for (int j = 0; j < 16; j++) {
             s[j] = goertzel_det.findCarrier_array(signal, (double) (f[j]), win_factor, 1, findLen);
+            //Log.e("SArray", "s[" + j + "] = " + s[j]);
          //   s[j] = goertzel_det.findCarrier_array2(signal, (double) (f[j]), win_factor, 1, findLen);//19/1/27
             try {
                 for (int i = 0; i < findLen; i++) {
@@ -219,7 +220,7 @@ public class Receiver {
         }
 
         double[] temp = new double[16];
-        int symNumber = findLen / win_factor;//
+        int symNumber = findLen / win_factor;
         Log.d(TAG, "symNumber = " + symNumber + "= findLen / win_factor =" +findLen +"/"+win_factor);
 
         int ii;
@@ -244,8 +245,9 @@ public class Receiver {
                 break;
             } else {
                 char val = (char) ((decode.get(i) << 4) + (decode.get(i + 1)));
-                Log.d(TAG, "val = " + Character.toString(val));
+                Log.e("Dolphinval", "val = " + Character.toString(val));
                 str += Character.toString(val);
+                Log.e("Dolphin", "str = " + str);
             }
         }
         Log.d(TAG, "decode String = " + str);
@@ -263,7 +265,7 @@ public class Receiver {
         while (modulated.size() > 48000 * 20) {
             modulated.remove(modulated.size() - 1);
         }
-        Log.d("Receiver", "This is the size of concatinated waveform: " + modulated.size());
+        //Log.d("Receiver", "This is the size of concatinated waveform: " + modulated.size());
     }
 
     private void star_anime_OWL(){

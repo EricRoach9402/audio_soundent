@@ -225,153 +225,153 @@ public class  MainActivity extends AppCompatActivity {
                                 Intent intent = new Intent(MainActivity.this,Animation.class);
                                 startActivity(intent);
                                 //interNet(recovered_string);//4/23//5/1//19/9/17
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
 
                             } else if (recovered_string.equals("NLGK")) {
 
                                 //interNet(recovered_string);
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
 
                             } else if (recovered_string.equals("gB2h")) {
                                 //interNet(recovered_string);
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             } else if (recovered_string.equals("meet")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("6js7")) {
                                 hast = recovered_string;
                                 sendPOST();
                                 //interNet(recovered_string);
                                 //WebSocket.send("6js7");
                                 //Log.d("Dolphinweb","傳送訊息" + "6js7");
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
 
                             }
                             else if (recovered_string.equals("iqje")) {
                                 hast = recovered_string;
                                 //sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("wppu")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("o7tg")) {
                                 hast = recovered_string;
                                 sendPOST();
                                 //Log.e("Dolphinweb", "mUID：" +mLogin.UID + "msoundID:" + mLogin.SOUNDID);
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("2X")) {
                                 hast = recovered_string;
-                                sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //sendPOST();
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             } else if (recovered_string.equals("QC")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }
                             else if (recovered_string.equals("AD")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("ZH")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("L6")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }
                             else if (recovered_string.equals("9W")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }
                             else if (recovered_string.equals("V3")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("FP")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("JR")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("T4")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("XZ")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("PL")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("C4")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("5A")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("ED")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("UD")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("47")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("MG")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("7Z")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
+                                text.setText("成功解碼");
                                 //text.setText("解調完成:\n" + recovered_string);
                             }else if (recovered_string.equals("G7")) {
                                 hast = recovered_string;
                                 sendPOST();
-                                text.setText("成功解鎖");
-                                //text.setText("解調完成:\n" + recovered_string);
+                                //text.setText("成功解碼");
+                                text.setText("解調完成:\n" + recovered_string);
                             }
                             else {
                                 text.setText("持續收音:\n" + recovered_string);//更改為繼續收音

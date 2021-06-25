@@ -10,17 +10,18 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera2.full" />
     <uses-feature android:name="android.hardware.camera2.autofocus" />
-    <uses-permission android:name="android.webkit.PermissionRequest" />
 
-    <uses-permission android:name="android.permission.CAMERA">
-    </uses-permission>
+    <uses-permission android:name="android.webkit.PermissionRequest" />
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
         android:allowBackup="true"
@@ -30,15 +31,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.FullScreen">
-        <activity android:name=".LoginFaceID"></activity>
+        <activity android:name=".MainMusic"></activity>
+        <activity android:name=".LoginFaceID" />
         <activity android:name=".FaceID" />
         <activity android:name=".Animation" />
 
-        <service android:name=".MyFirebaseService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
 
         <meta-data
             android:name="com.google.android.actions"
@@ -53,6 +51,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <service android:name=".MediaService"/>
     </application>
 
 </manifest>
