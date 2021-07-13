@@ -88,7 +88,6 @@ public class  MainActivity extends AppCompatActivity {
     private Context context;
     private Receiver receiver;
     private WebSocket WebSocket;
-    private Recorder r;
     private Login mLogin;
 
     private static String TAG = "MainActivity";      // Permissions to write to files
@@ -98,17 +97,16 @@ public class  MainActivity extends AppCompatActivity {
     private String hast;
     public double threshold;
     public boolean anime = false;
-    public int fstart, anime2 = 0;
-    String strResult=null;
+    public int fstart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_main);
+        //*防止螢幕關閉*/
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        setContentView(R.layout.activity_main);
-        
+        //*基礎數值設定*/
         sample_rate = 48000.0;//設定取樣率
         sample_period = 1 / sample_rate;
         symbol_size = 0.125;//設定symbol頻率時間長度
