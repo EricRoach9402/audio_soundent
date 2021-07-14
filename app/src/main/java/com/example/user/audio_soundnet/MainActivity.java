@@ -136,6 +136,7 @@ public class  MainActivity extends AppCompatActivity {
                 }
             }
         });
+        //**權限設定*/
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
             String channelId  = "default_notification_channel_id";
@@ -145,24 +146,6 @@ public class  MainActivity extends AppCompatActivity {
             notificationManager.createNotificationChannel(new NotificationChannel(channelId,
                     channelName, NotificationManager.IMPORTANCE_LOW));
         }
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener( new OnCompleteListener<InstanceIdResult>() {
-            @Override
-            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                if (!task.isSuccessful()) {
-                    Log.i("MainActivity", "getInstanceId failed");
-                    return;
-                }
-                // Get new Instance ID token
-                String token = task.getResult().getToken();
-                Log.i("MainActivity","token "+token);
-            }
-        });
-        context = getApplicationContext();
-        recorder(context);//19_1_29_讀音檔
-
-        /*----4/22--------------------*/
-
         currentApiVersion = Build.VERSION.SDK_INT;
 
         final int flags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -192,29 +175,46 @@ public class  MainActivity extends AppCompatActivity {
                         }
                     });
         }
-        //----------------------------
+
+        //**firebase推播設定*/
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener( new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                if (!task.isSuccessful()) {
+                    Log.i("MainActivity", "getInstanceId failed");
+                    return;
+                }
+                // Get new Instance ID token
+                String token = task.getResult().getToken();
+                Log.i("MainActivity","token "+token);
+            }
+        });
+
+        //**上下文*/
+        context = getApplicationContext();
+        recorder(context);//19_1_29_讀音檔
+
+        //**執行線程*/
         requestRecordPermissions();
         requestWritePermissions();
 
     }
 
+    //**錄音主流程*/
     private void recorder(final Context context) {
 
         new Thread() {
             public void run() {
                 try {
-
                     receiver = new Receiver("recorded.wav", fstart, Bw, sym_end, sample_rate, symbol_size, duration, context, MainActivity.this);
                     receiver.record();//錄音
                     receiver.demodulate();//解調
                     recovered_string = receiver.getRecoverd_string();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
+                //**根據辨識引導目標*/
                 try {
-
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -377,7 +377,6 @@ public class  MainActivity extends AppCompatActivity {
                             }
                         }
                     });
-
                 } catch (final Exception e) {
                     e.printStackTrace();
                 }
@@ -385,6 +384,7 @@ public class  MainActivity extends AppCompatActivity {
         }.start();
 
     }
+    //**數據傳送*/
     private void sendPOST() {
         /**建立連線*/
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -418,8 +418,7 @@ public class  MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
+    //*連線*/
     private void interNet(String str) {
 
         Uri uri = Uri.parse("https://t.ly/" + str);

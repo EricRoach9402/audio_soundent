@@ -18,9 +18,11 @@ public class Receiver {
     private double sample_period;
     private double symbol_size;
     private double duration;
-    private ArrayList<Double> modulated;
+
+    public ArrayList<Double> modulated;
+    //private ArrayList<Double> modulated;
+
     private ArrayList<Byte> ByteToArrayList;
-    private AudioHandler audio_handler;
     private ArrayList<Double> recoverd_signal;
     private String recoverd_string;
     private Context context;
@@ -94,9 +96,9 @@ public class Receiver {
 
             r.stop();//錄音結束
             stopanime_OWL();
-            audio_handler = new AudioHandler(context, file_name);
-            modulated = audio_handler.read();//讀錄音檔;嘗試將Buffer直接加入modulated
-            //ByteToArrayList = audio_handler.conversion(r.ArrSteaming);
+
+            modulated = r.abc;
+
             Log.d("Receiver", "This is the size of modulated(audio_read): " + modulated.size());
             concatinateRecording();
             goertzel_det = new GoertzelDetector(symbol_size, sample_rate);//goertzel計算設定
@@ -111,8 +113,6 @@ public class Receiver {
             for (int i = 0; i < modulated.size() - start_index; i++)
                 recoverd_signal.add(modulated.get(start_index + i));//去掉sync訊號的位置，從之後開始存入錄音的取樣資料
 
-
-            audio_handler.close();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -177,15 +177,6 @@ public class Receiver {
     }
 
     private String goertzel_demodulate(ArrayList<Double> recoverd_signal, int fstart, int win_factor, int shift_factor) {
-        FileOutputStream fos = null;
-        OutputStreamWriter dos = null;
-
-        try {
-            fos = new FileOutputStream(r.getFileName(dataFile));
-            dos = new OutputStreamWriter(fos);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
         int signal_len = recoverd_signal.size();
         int findLen = signal_len / symbol_N;//找到symbol訊號的長度
@@ -204,19 +195,7 @@ public class Receiver {
             s[j] = goertzel_det.findCarrier_array(signal, (double) (f[j]), win_factor, 1, findLen);
             //Log.e("SArray", "s[" + j + "] = " + s[j]);
          //   s[j] = goertzel_det.findCarrier_array2(signal, (double) (f[j]), win_factor, 1, findLen);//19/1/27
-            try {
-                for (int i = 0; i < findLen; i++) {
-                    dos.append(" " + s[j][i] + " ");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
-        try {
-            dos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
         double[] temp = new double[16];
