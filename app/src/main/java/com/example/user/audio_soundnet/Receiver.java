@@ -270,8 +270,4 @@ public class Receiver {
             }
         }).start();
     }
-    public void Steaming(byte[] bytes2){
-
-    }
-
 }

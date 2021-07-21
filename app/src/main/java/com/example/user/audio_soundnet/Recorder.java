@@ -138,7 +138,7 @@ import java.util.ArrayList;
         long recLen = 0;
         boolean stopAdd = false;
 
-        int cont=0;//計算if(stop_anime)進去次數
+        //int cont=0;//計算if(stop_anime)進去次數
         abc = new ArrayList<Double>();
         while (isRecording) {
             recorder.read(buffer, 0, buffer.length);
@@ -192,7 +192,7 @@ import java.util.ArrayList;
                         stop_anime=false;
                         may.anime=true;
 
-                        Log.d("star_anime_OWL", "stop_anime_cont: " + cont);
+                        //Log.d("star_anime_OWL", "stop_anime_cont: " + cont);
                     }
                     Log.d(TAG, "find Max_sync, s[mInd] = " + s[mInd]);
                 }
@@ -210,6 +210,7 @@ import java.util.ArrayList;
                         //ArrSteaming[x + old_lenght] = bytes2[x];
 
                     }
+                    //設定TimeOut 一字元約需96000
                     old_lenght += 9600;
                     if (old_lenght >= 192000)timeout = true;
                 }
