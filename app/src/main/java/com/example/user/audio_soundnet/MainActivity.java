@@ -111,6 +111,9 @@ public class  MainActivity extends AppCompatActivity {
         sample_period = 1 / sample_rate;
         symbol_size = 0.125;//設定symbol頻率時間長度
         fstart = 18000;//設定起始symbol頻率
+
+        //2021/08/09:最大頻率20048END頻率20400此處有疑點，待測試
+
         Bw = 20048.0;//設定sync頻率和最大頻率
         sym_end = 20400.0;//設定END頻率
         threshold = 1;//找sync頻率和END頻率的ESD值
@@ -120,10 +123,8 @@ public class  MainActivity extends AppCompatActivity {
         bs = (Button) findViewById(R.id.reStart);
         //initSocketClient();
 
-
-
-        //text.setVisibility(View.INVISIBLE);
-        owLoading = (OWLoading) findViewById(R.id.owloading);//5/1
+        //加載動畫
+        owLoading = (OWLoading) findViewById(R.id.owloading);
         bs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

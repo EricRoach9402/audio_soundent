@@ -145,10 +145,6 @@ import java.util.ArrayList;
             for (int t = 0;t < buffer.length; t ++) {
                 //Log.d("Goertzel", "I16Array = " + buffer[t]);
             }
-            if (log1) {
-                Log.d(TAG, "audio buffer len = " + buffer.length);
-                log1 = false;
-            }
             if (AudioRecord.ERROR_INVALID_OPERATION != read) {
 
                 double tmpData[] = new double[buffer.length];
@@ -170,10 +166,12 @@ import java.util.ArrayList;
                 if(recStart) {
 
                     double[] s_end=new double[s_len];
+
+                    //想像成使用sym_end的值除以所有已經過處理的訊號
                     s_end=goertzelDetector.findCarrier_array(tmpData, sym_end, win_factor, shift_factor, s_len);
-
+                    //找到所有訊號裡最大值的位置
                     int mInd_end = findMax(s_end, s_len);
-
+                    //如果最大值位置的訊號有 >1 則進入if
                     if (s_end[mInd_end] > may.threshold || timeout) {
                         Log.d(TAG, "find Max_END, recLen = " + recLen);
                         Log.d(TAG, "find Max_END, s_end[mInd_end] = " + s_end[mInd_end]);
@@ -206,9 +204,6 @@ import java.util.ArrayList;
                     for (int x = 0;x < buffer.length;x++){
 
                         abc.add((double)buffer[x]);
-                        //receiver.modulated.add((double) buffer[x]);
-                        //ArrSteaming[x + old_lenght] = bytes2[x];
-
                     }
                     //設定TimeOut 一字元約需96000
                     old_lenght += 9600;
