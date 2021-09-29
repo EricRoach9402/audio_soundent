@@ -1,4 +1,4 @@
-package com.example.user.audio_soundnet;
+package com.example.user.audio_soundnet.faceID_Register;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -7,10 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +17,8 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.example.user.audio_soundnet.R;
 
 public class LoginFaceID extends AppCompatActivity {
     private static final int CAMERA_REQUEST = 1888;

@@ -1,4 +1,4 @@
-package com.example.user.audio_soundnet;
+package com.example.user.audio_soundnet.MediaPacket;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.NotificationCompat;
 
+import com.example.user.audio_soundnet.R;
+
 public class MediaService extends Service {
 
     private MediaPlayer mediaPlayer = new MediaPlayer();
@@ -24,7 +26,7 @@ public class MediaService extends Service {
     public void onCreate() {
         super.onCreate();
         /**將歌曲載入到MediaPlayer中*/
-        mediaPlayer = MediaPlayer.create(this,R.raw.a2x);
+        mediaPlayer = MediaPlayer.create(this, R.raw.a2x);
         /**載入mediaPlayer給Binder音樂工具包*/
         mBinder = new MusicBinder(mediaPlayer);
         /**設置音樂播放屬性為Loop*/

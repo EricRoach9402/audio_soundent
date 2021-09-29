@@ -1,4 +1,4 @@
-package com.example.user.audio_soundnet;
+package com.example.user.audio_soundnet.faceID_Register;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,9 +6,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,19 +17,9 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
-import com.orhanobut.logger.Logger;
-
-
-import org.java_websocket.handshake.ServerHandshake;
-
-import java.io.File;
-import java.net.URI;
+import com.example.user.audio_soundnet.R;
 
 
 public class FaceID extends AppCompatActivity {
@@ -41,7 +28,7 @@ public class FaceID extends AppCompatActivity {
     private WebView appWebView;
     private String recognitionapp ="https://webview-face-recognition.netlify.app/";
 
-    private WebSocket WebSocket;
+    private com.example.user.audio_soundnet.WebSocketPackage.WebSocket WebSocket;
     String WebReceive;
     public static String UID,SOUNDID;
 

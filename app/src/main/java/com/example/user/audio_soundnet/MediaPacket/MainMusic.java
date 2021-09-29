@@ -1,4 +1,4 @@
-package com.example.user.audio_soundnet;
+package com.example.user.audio_soundnet.MediaPacket;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import com.example.user.audio_soundnet.R;
 
 public class MainMusic extends AppCompatActivity {
     SeekBar sbPosition;

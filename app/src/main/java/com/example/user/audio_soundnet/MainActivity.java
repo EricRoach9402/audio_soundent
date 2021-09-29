@@ -14,27 +14,11 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 
-import cz.msebera.android.httpclient.Header;//Async Http Client
-import cz.msebera.android.httpclient.HttpEntity;
-import cz.msebera.android.httpclient.HttpResponse;
-import cz.msebera.android.httpclient.NameValuePair;
-import cz.msebera.android.httpclient.client.HttpClient;
-import cz.msebera.android.httpclient.client.entity.UrlEncodedFormEntity;
-import cz.msebera.android.httpclient.client.methods.HttpPost;
-import cz.msebera.android.httpclient.entity.StringEntity;
-import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
-import cz.msebera.android.httpclient.impl.client.HttpClientBuilder;
-import cz.msebera.android.httpclient.message.BasicNameValuePair;
-import cz.msebera.android.httpclient.protocol.HTTP;
-import cz.msebera.android.httpclient.util.EntityUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
@@ -56,20 +40,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.user.audio_soundnet.OWLoadingAniment.OWLoading;
+import com.example.user.audio_soundnet.faceID_Register.Login;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
-import com.loopj.android.http.AsyncHttpClient;
 
-import org.java_websocket.handshake.ServerHandshake;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 //import com.sackcentury.shinebuttonlib.ShineButton;
 
 
@@ -87,7 +66,7 @@ public class  MainActivity extends AppCompatActivity {
 
     private Context context;
     private Receiver receiver;
-    private WebSocket WebSocket;
+    private com.example.user.audio_soundnet.WebSocketPackage.WebSocket WebSocket;
     private Login mLogin;
 
     private static String TAG = "MainActivity";      // Permissions to write to files
@@ -105,7 +84,7 @@ public class  MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //*防止螢幕關閉*/
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+        sendPOST();
         //*基礎數值設定*/
         sample_rate = 48000.0;//設定取樣率
         sample_period = 1 / sample_rate;
@@ -393,13 +372,21 @@ public class  MainActivity extends AppCompatActivity {
                 .build();
         /**設置傳送所需夾帶的內容*/
         FormBody formBody = new FormBody.Builder()
+                //.add("firstname", "方")
+                //.add("lastname", "奕凱")
+                .add("StudenNumber","MB030201")
+                .add("password","a12345678")
+                //.add("password2","a12345678")
+                .build();
+        /**設置傳送所需夾帶的內容
+        FormBody formBody = new FormBody.Builder()
                 .add("soundId", mLogin.SOUNDID)
                 .add("hash", hast)
                 .add("door",mLogin.doorID)
-                .build();
+                .build();*/
         /**設置傳送需求*/
         Request request = new Request.Builder()
-                .url("https://soundnet-server.herokuapp.com/api/server/verify")
+                .url("http://192.168.50.172:3000/api/login")//https://soundnet-server.herokuapp.com/api/server/verify
                 .post(formBody)
                 .build();
         /**設置回傳*/

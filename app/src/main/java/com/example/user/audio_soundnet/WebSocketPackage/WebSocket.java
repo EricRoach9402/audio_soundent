@@ -1,4 +1,4 @@
-package com.example.user.audio_soundnet;
+package com.example.user.audio_soundnet.WebSocketPackage;
 
 import android.util.Log;
 

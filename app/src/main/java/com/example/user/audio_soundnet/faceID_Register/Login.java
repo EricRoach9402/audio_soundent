@@ -1,7 +1,6 @@
-package com.example.user.audio_soundnet;
+package com.example.user.audio_soundnet.faceID_Register;
 
 import android.content.Intent;
-import android.graphics.Path;
 import android.os.Handler;
 //import android.support.v7.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,26 +13,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.user.audio_soundnet.MainActivity;
+import com.example.user.audio_soundnet.MediaPacket.MainMusic;
+import com.example.user.audio_soundnet.R;
+import com.example.user.audio_soundnet.Register;
+import com.example.user.audio_soundnet.UserLogin;
+import com.example.user.audio_soundnet.WebSocketPackage.WebSocket;
 import com.royrodriguez.transitionbutton.TransitionButton;
 
 import org.java_websocket.handshake.ServerHandshake;
-import org.jetbrains.annotations.NotNull;
-import java.io.IOException;
-import java.net.URI;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
+import java.net.URI;
 
 public class Login extends AppCompatActivity {
 
-    private WebSocket WebSocket;
-    private WebSocketConnection WebSocketConnection;
+    private com.example.user.audio_soundnet.WebSocketPackage.WebSocket WebSocket;
+    private com.example.user.audio_soundnet.WebSocketPackage.WebSocketConnection WebSocketConnection;
     private MainActivity mac;
 
     ImageView Dolphin, DolphinMaster, Soundent;
@@ -69,14 +64,14 @@ public class Login extends AppCompatActivity {
         frame1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, FaceID.class);
+                Intent intent = new Intent(Login.this, Register.class);
                 startActivity(intent);
             }
         });
         frame2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, LoginFaceID.class);
+                Intent intent = new Intent(Login.this, UserLogin.class);
                 startActivity(intent);
             }
         });
@@ -124,7 +119,7 @@ public class Login extends AppCompatActivity {
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, com.example.user.audio_soundnet.MainMusic.class);
+                Intent intent = new Intent(Login.this, MainMusic.class);
                 startActivity(intent);
             }
         });
