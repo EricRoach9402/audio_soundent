@@ -71,7 +71,7 @@ public class Register extends AppCompatActivity {
                 .add("password2",getPassword2)
                 .build();
         Request request = new Request.Builder()
-                .url("http://192.168.0.106/register.php")//http://192.168.50.172:3000/api/register
+                .url("http://192.168.50.192/sound_networking/PHP/register.php")//http://192.168.50.172:3000/api/register
                 .post(formBody)
                 .build();
         /**設置回傳*/

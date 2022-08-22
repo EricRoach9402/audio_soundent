@@ -92,12 +92,9 @@ public class  MainActivity extends AppCompatActivity {
         symbol_size = 0.125;//設定symbol頻率時間長度
         fstart = 18000;//設定起始symbol頻率
 
-        //2021/08/09:最大頻率20048END頻率20400此處有疑點，待測試
-
         Bw = 20048.0;//設定sync頻率和最大頻率
         sym_end = 20400.0;//設定END頻率
         threshold = 1;//找sync頻率和END頻率的ESD值
-
 
         text = (TextView) findViewById(R.id.dm_text);
         bs = (Button) findViewById(R.id.reStart);
@@ -218,6 +215,55 @@ public class  MainActivity extends AppCompatActivity {
 
                             }*/
                             else if (recovered_string.equals("A")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("AB")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("ABC")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("ABCD")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("ABCDE")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("ABCDEF")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("ABCDEFG")) {
+
+                                //interNet(recovered_string);
+                                //text.setText("成功解碼");
+                                sendPOST();
+                                text.setText("解調完成:\n" + recovered_string);
+
+                            }else if (recovered_string.equals("ABCDEFGH")) {
 
                                 //interNet(recovered_string);
                                 //text.setText("成功解碼");

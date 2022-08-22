@@ -220,7 +220,7 @@ public class Receiver {
         String str = "";
         for (int i = 0; i < symNumber; i = i + 2) {
             if (decode.size() - i < 2) break;
-            Log.d(TAG, "" + decode.get(i) + ", " + decode.get(i + 1));
+            Log.d("decode", "" + decode.get(i) + ", " + decode.get(i + 1));
             if (decode.get(i) == 0 && decode.get(i + 1) == 0) {
                 break;
             } else {

@@ -38,7 +38,7 @@ public class GoertzelDetector {
         double Q2 = 0;
         //Log.v("Goertzel","xlen:" + xlen);
         for (int i = 0; i < xlen; i++) {
-            Log.v("Goertzel","x[i]:" + x[i]);
+            //Log.v("Goertzel","x[i]:" + x[i]);
             Q0 = coe * Q1 - Q2 + x[i];
             Q2 = Q1;
             Q1 = Q0;
