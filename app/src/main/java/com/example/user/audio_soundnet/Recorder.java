@@ -7,6 +7,9 @@ import android.media.audiofx.AutomaticGainControl;
 import android.os.Environment;
 import android.util.Log;
 
+import com.example.user.audio_soundnet.ROOT.ROOT;
+import com.example.user.audio_soundnet.ROOT.TimerTool;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,10 +21,12 @@ import java.nio.ByteOrder;
 import java.util.ArrayList;
 
 
+
  public class Recorder {
     private AudioRecord recorder;
     private GoertzelDetector goertzelDetector;
     private Receiver receiver;
+    private TimerTool timerTool;
     private int lenght,old_lenght=0;
     private boolean timeout = false;
 
@@ -47,13 +52,12 @@ import java.util.ArrayList;
 
     private double maxIndex;
     public ArrayList<Double> abc;
-
+     //測試ROOT用，正常使用ROOT改為 MainActivity
     private MainActivity may;
     private boolean stop_anime;
     public static byte [] ArrSteaming = new byte[300000];
     public static byte [] zeroArray = new byte[4044],mixArray = new byte[400000];
-
-
+//測試ROOT用，正常使用ROOT改為MainActivity
     public Recorder(double symbol_size, double Bw, double sym_END, final MainActivity act) {
         this.symbol_size = symbol_size;
         this.Bw = Bw;//20048
@@ -116,7 +120,7 @@ import java.util.ArrayList;
                 index = i;
             }
         }
-        Log.d(TAG, "goertzel data for head = "+max);
+        //Log.d(TAG, "goertzel data for head = "+max);
 
         return index;
     }
@@ -140,7 +144,9 @@ import java.util.ArrayList;
 
         //int cont=0;//計算if(stop_anime)進去次數
         abc = new ArrayList<Double>();
+        may.StartTimer(true);
         while (isRecording) {
+            //may.Starttime();
             recorder.read(buffer, 0, buffer.length);
             /*for (int t = 0;t < buffer.length; t ++) {
                 //Log.d("Goertzel", "I16Array = " + buffer[t]);
@@ -173,6 +179,8 @@ import java.util.ArrayList;
                     int mInd_end = findMax(s_end, s_len);
                     //如果最大值位置的訊號有 >1 則進入if
                     if (s_end[mInd_end] > may.threshold || timeout) {
+                        may.StartTimer(false);
+                        //may.Stoptime();
                         Log.d(TAG, "find Max_END, recLen = " + recLen);
                         Log.d(TAG, "find Max_END, s_end[mInd_end] = " + s_end[mInd_end]);
                         System.arraycopy(zeroArray,0,mixArray,0,zeroArray.length);
@@ -181,6 +189,10 @@ import java.util.ArrayList;
                     }
                 }
                 if (s[mInd] > may.threshold) {//19_1/27,19_3_5 取得Sync
+                    //may.StartTimer(true);
+                    //may.Starttime();
+                    may.Record();//紀錄Sync時間
+
                     Log.d(TAG, "find Max, recLen = " + recLen);
                     maxIndex = s[mInd]; //振幅
                     stopAdd = true;
@@ -188,8 +200,6 @@ import java.util.ArrayList;
                     if (stop_anime){
                         stop_anime=false;
                         may.anime=true;
-
-                        //Log.d("star_anime_OWL", "stop_anime_cont: " + cont);
                     }
                     Log.d(TAG, "find Max_sync, s[mInd] = " + s[mInd]);
                 }

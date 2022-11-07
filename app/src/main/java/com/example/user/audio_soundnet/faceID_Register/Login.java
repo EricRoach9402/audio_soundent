@@ -5,6 +5,7 @@ import android.os.Handler;
 //import android.support.v7.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,18 +13,31 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.user.audio_soundnet.MainActivity;
 import com.example.user.audio_soundnet.MediaPacket.MainMusic;
 import com.example.user.audio_soundnet.R;
+import com.example.user.audio_soundnet.ROOT.ROOT;
 import com.example.user.audio_soundnet.Register;
 import com.example.user.audio_soundnet.UserLogin;
 import com.example.user.audio_soundnet.WebSocketPackage.WebSocket;
 import com.royrodriguez.transitionbutton.TransitionButton;
 
 import org.java_websocket.handshake.ServerHandshake;
+import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.net.URI;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class Login extends AppCompatActivity {
 
@@ -119,11 +133,64 @@ public class Login extends AppCompatActivity {
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Login.this, MainMusic.class);
-                startActivity(intent);
+                sendPOST();
+                //Intent intent = new Intent(Login.this, ROOT.class);
+                //startActivity(intent);
             }
         });
 
+    }
+    //**數據傳送*/
+    public void sendPOST() {
+        /**建立連線*/
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
+                .connectTimeout(5, TimeUnit.MINUTES) // connect timeout
+                .writeTimeout(5, TimeUnit.MINUTES) // write timeout
+                .readTimeout(5, TimeUnit.MINUTES) // read timeout
+                .build();
+        /**設置傳送所需夾帶的內容*/
+        FormBody formBody = new FormBody.Builder()
+                .add("StudenNumber", "2")
+                .add("password", "4")
+                .add("OpenDoor", "N")
+                .add("MusicNumber","1")
+                .build();
+        final Request request = new Request.Builder()
+                .url("http://192.168.50.194/sound_networking/PHP/AudioLogin.php") //2022/0712後IP更改
+                .post(formBody)
+                .build();
+        /**設置回傳*/
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                /**如果傳送過程有發生錯誤*/
+                //text.setText(e.getMessage());
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                /**取得回傳*/
+                String reponseString = response.body().string(),state;//response.body().string()僅可呼叫一次
+                String[] cmds = reponseString.split(":");
+                Log.e("Dolphinweb", "收到的錯誤消息：" + cmds[1]);
+                if (cmds[1].equals("成功}")){
+                    Looper.prepare();
+                    Toast.makeText(Login.this,reponseString,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Login.this, MainActivity.class);
+                    startActivity(intent);
+                    Looper.loop();
+                }
+                else{
+                    Looper.prepare();
+                    Toast.makeText(Login.this,reponseString,Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+
+                Log.v("Response",reponseString);
+            }
+        });
     }
     /**
      * 初始化websocket连接
@@ -156,7 +223,6 @@ public class Login extends AppCompatActivity {
                     closeConnect();
                     Intent intent = new Intent(Login.this,MainActivity.class);
                     startActivity(intent);
-
                 }
 
 

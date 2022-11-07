@@ -10,6 +10,8 @@ import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.user.audio_soundnet.ROOT.ROOT;
+
 public class Receiver {
     private static final String TAG = "Receiver";
 
@@ -43,11 +45,11 @@ public class Receiver {
     private ArrayList<Double> AL;
     static final String dataFile = "FSK_Goertzel.txt";
     public static boolean mPd;
-
-    final MainActivity myact;
+    //測試ROOT用，正常使用時ROOT改為MainActivity
+    private MainActivity myact;
 
     int cont=0;
-
+//測試ROOT用，正常使用時ROOT改為MainActivity
     public Receiver(String file_name, int fstart, double Bw,double sym_END, double sample_rate, double symbol_size, double duration, Context context,final MainActivity act) {
         this.file_name = file_name;
         this.sample_rate = sample_rate;
@@ -73,7 +75,7 @@ public class Receiver {
 
     public void record() {
         try {
-            r = new Recorder(symbol_size, Bw, sym_end, myact);//19_1_29_啟動錄音
+            r = new Recorder(symbol_size, Bw, sym_end,myact);//19_1_29_啟動錄音
             r.start();
             while (!r.getEND) {//判斷有沒有找到END頻率
 
@@ -83,6 +85,7 @@ public class Receiver {
                         myact.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                //測試註解,正常使用時刪除註解
                                 myact.text.setText("Loading...");
                             }
                         });
@@ -225,7 +228,7 @@ public class Receiver {
                 break;
             } else {
                 char val = (char) ((decode.get(i) << 4) + (decode.get(i + 1)));
-                Log.e("Dolphinval", "val = " + Character.toString(val));
+                //Log.e("Dolphinval", "val = " + Character.toString(val));
                 str += Character.toString(val);
                 Log.e("Dolphin", "str = " + str);
             }
@@ -255,6 +258,7 @@ public class Receiver {
             public void run() {
                 Message msg = new Message();
                 msg.what = 1;
+                //測試註解，正常使用時刪除註解
                 myact.mowLoading.sendMessage(msg);
             }
         }).start();
@@ -267,6 +271,7 @@ public class Receiver {
             public void run() {
                 Message msg = new Message();
                 msg.what = 0;
+                //測試用，正常使用時刪除註解
                 myact.mowLoading.sendMessage(msg);
             }
         }).start();

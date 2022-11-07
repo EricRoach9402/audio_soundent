@@ -78,7 +78,7 @@ public class UserLogin extends AppCompatActivity {
                 //.url("http://192.168.0.106/AudioLogintest.php")//http://192.168.50.172:3000/api/login
                 //.url("http://192.168.50.194/AudioLogintest.php")// 2022/0712前使用
                 //.url("http://192.168.50.192/AudioLogintest.php") //2022/0712後IP更改
-                .url("http://192.168.50.192/sound_networking/PHP/AudioLogin.php") //2022/0712後IP更改
+                .url("http://192.168.50.194/sound_networking/PHP/AudioLogin.php") //2022/0712後IP更改
                 //.url("http://192.168.50.192/AudioLogintest.php")
                 //.url("http://192.168.0.106/client.php")
                 .post(formBody)

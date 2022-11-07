@@ -49,6 +49,11 @@ import com.google.firebase.iid.InstanceIdResult;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+
+//新增計時器
+import java.util.Timer;
+import java.util.TimerTask;
+import android.widget.Toast;
 import java.util.Random;
 //import com.sackcentury.shinebuttonlib.ShineButton;
 
@@ -65,6 +70,7 @@ public class  MainActivity extends AppCompatActivity {
     Button bs;
     OWLoading owLoading;
 
+
     private Context context;
     private Receiver receiver;
     private com.example.user.audio_soundnet.WebSocketPackage.WebSocket WebSocket;
@@ -78,6 +84,14 @@ public class  MainActivity extends AppCompatActivity {
     public double threshold;
     public boolean anime = false;
     public int fstart;
+
+    //設定初始時間
+    int tt = 0;
+    int start_tt = 0;
+    Timer timer = new Timer();
+    private String str_tt,all_time;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +113,8 @@ public class  MainActivity extends AppCompatActivity {
         text = (TextView) findViewById(R.id.dm_text);
         bs = (Button) findViewById(R.id.reStart);
         //initSocketClient();
+
+
 
         //加載動畫
         owLoading = (OWLoading) findViewById(R.id.owloading);
@@ -186,7 +202,8 @@ public class  MainActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    receiver = new Receiver("recorded.wav", fstart, Bw, sym_end, sample_rate, symbol_size, duration, context, MainActivity.this);
+                    //測試, MainActivity.this,ROOT使用，無使用刪除註解
+                    receiver = new Receiver("recorded.wav", fstart, Bw, sym_end, sample_rate, symbol_size, duration, context,MainActivity.this);
                     receiver.record();//錄音
                     receiver.demodulate();//解調
                     recovered_string = receiver.getRecoverd_string();
@@ -199,225 +216,103 @@ public class  MainActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             //181217----偵測否是網址
-                            if (recovered_string.equals("CbST")) {
-                                Intent intent = new Intent(MainActivity.this,Animation.class);
-                                startActivity(intent);
-                                //interNet(recovered_string);//4/23//5/1//19/9/17
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
+                            if (recovered_string != null) {
+                                if (recovered_string.equals("CbST")) {
+                                    Intent intent = new Intent(MainActivity.this, Animation.class);
+                                    startActivity(intent);
+                                    //interNet(recovered_string);//4/23//5/1//19/9/17
+                                    //text.setText("成功解碼");
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }
-                            /*else if (recovered_string.equals("a")) {
+                                }
+                                else if (recovered_string.equals("A")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }*/
-                            else if (recovered_string.equals("A")) {
+                                } else if (recovered_string.equals("AB")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("AB")) {
+                                } else if (recovered_string.equals("ABC")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("ABC")) {
+                                } else if (recovered_string.equals("ABCD")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("ABCD")) {
+                                } else if (recovered_string.equals("ABCDE")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("ABCDE")) {
+                                } else if (recovered_string.equals("ABCDEF")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("ABCDEF")) {
+                                } else if (recovered_string.equals("ABCDEFG")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("ABCDEFG")) {
+                                } else if (recovered_string.equals("ABCDEFGH")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("ABCDEFGH")) {
+                                } else if (recovered_string.equals("Give")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                sendPOST();
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            }else if (recovered_string.equals("NLGK")) {
+                                } else if (recovered_string.equals("Ice")) {
 
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
 
-                            } else if (recovered_string.equals("gB2h")) {
-                                //interNet(recovered_string);
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            } else if (recovered_string.equals("meet")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("6js7")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //interNet(recovered_string);
-                                //WebSocket.send("6js7");
-                                //Log.d("Dolphinweb","傳送訊息" + "6js7");
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
+                                } else if (recovered_string.equals("Lemon")) {
 
-                            }
-                            else if (recovered_string.equals("iqje")) {
-                                hast = recovered_string;
-                                //sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("wppu")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("o7tg")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //Log.e("Dolphinweb", "mUID：" +mLogin.UID + "msoundID:" + mLogin.SOUNDID);
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("2X")) {
-                                hast = recovered_string;
-                                //sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            } else if (recovered_string.equals("QC")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }
-                            else if (recovered_string.equals("AD")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("ZH")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("L6")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }
-                            else if (recovered_string.equals("9W")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }
-                            else if (recovered_string.equals("V3")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("FP")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("JR")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("T4")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("XZ")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("PL")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("C4")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("5A")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("ED")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("UD")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("47")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("MG")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("7Z")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                text.setText("成功解碼");
-                                //text.setText("解調完成:\n" + recovered_string);
-                            }else if (recovered_string.equals("G7")) {
-                                hast = recovered_string;
-                                sendPOST();
-                                //text.setText("成功解碼");
-                                text.setText("解調完成:\n" + recovered_string);
-                            }
-                            else {
-                                text.setText("持續收音:\n" + recovered_string);//更改為繼續收音
-                                recorder(context);
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
+
+                                } else if (recovered_string.equals("Me")) {
+
+                                    //interNet(recovered_string);
+                                    //text.setText("成功解碼");
+                                    sendPOST();
+                                    text.setText("解調完成:\n" + recovered_string);
+                                }
+                                 else {
+                                    text.setText("持續收音:\n" + recovered_string);//更改為繼續收音
+                                    recorder(context);
+                                }
                             }
                         }
                     });
@@ -427,6 +322,53 @@ public class  MainActivity extends AppCompatActivity {
             }
         }.start();
 
+    }
+
+    //**設定計數器*/
+    public void StartTimer(boolean Open_or_Close){
+        if (Open_or_Close == true){
+            try {
+                if (tt != 0){
+                    tt = 0;
+                }
+                Log.v("TimeView","Time起始時間：" + tt);
+                //開始計時
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        tt++;
+                    }
+                };
+                timer.schedule(task,100,100);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if(Open_or_Close == false){
+            //紀錄Sync至解調完成時間
+            float flt_tt = (float) (tt - start_tt) / 10;
+            str_tt = String.valueOf(flt_tt);
+            Log.v("TimeView","Sync - End經過時間" + str_tt);
+
+            //紀錄登入完成至解調完成時間
+            float all_flt_tt = (float)tt / 10;
+            all_time = String.valueOf(all_flt_tt);
+            Log.v("TimeView","完整登入時間" + all_time);
+
+            //Toast無法在子線程中執行，因此需要 runOnUiThread() 來訪問UI線程
+            MainActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(MainActivity.this, "Sync - End經過時間" + str_tt + "秒 ; 完整登入時間：" + all_time, Toast.LENGTH_SHORT).show();
+                }
+            });
+                timer.cancel();
+                timer.purge();
+        }
+    }
+    public void Record(){
+        start_tt = tt;
+        Log.v("TimeView","Sync時間紀錄" + (float)start_tt / 10);
     }
     //**數據傳送*/
     private void sendPOST() {
@@ -450,7 +392,7 @@ public class  MainActivity extends AppCompatActivity {
                 .build();*/
         /**設置傳送需求*/
         Request request = new Request.Builder()
-                .url("http://192.168.50.192/sound_networking/PHP/AudioLogin.php")//https://soundnet-server.herokuapp.com/api/server/verify;http://192.168.50.172:3000/api/login
+                .url("http://192.168.50.194/sound_networking/PHP/AudioLogin.php")//https://soundnet-server.herokuapp.com/api/server/verify;http://192.168.50.172:3000/api/login
                 .post(formBody)
                 .build();
         /**設置回傳*/
